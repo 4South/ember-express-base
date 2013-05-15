@@ -1,0 +1,8 @@
+{
+  "name": "Ember.js and express.js starter with user auth",
+  "version": "0.1.0",
+  "dependencies": {
+    "ember": null,
+    "bootstrap": null,
+  }
+}

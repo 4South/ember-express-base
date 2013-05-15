@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Base for Ember Application</title>
+    <link href="public/javascripts/libs/bootstrap/docs/assets/css/bootstrap.css" 
+          rel="stylesheet" type="text/css">
+    <link href="public/dist/appsass.css" rel="stylesheet" type="text/css">
+  </head>
+  
+  <body>
+    <div id="container"></div>
+
+    <!--module loading library -->
+    <script src="public/javascripts/libs/minispade.js"></script>
+
+    <!--ember.js core requirements (loaded by bower) -->
+    <script src="public/javascripts/libs/jquery/jquery.js"></script>
+    <script src="public/javascripts/libs/handlebars/handlebars.js"></script>
+    <script src="public/javascripts/libs/ember.js/ember.js"></script>
+
+    <!--our client-side app and compiled templates -->
+    <script src="public/dist/appjs.js"></script>
+    <script src="public/dist/apptemplates.js"></script>
+
+    <script>
+      minispade.require("application/Application.js");
+    </script>
+
+    <!-- needed to embed livereload in your actual server -->
+    <script src="http://localhost:35729/livereload.js?snipver=1">
+    </script>
+
+  </body>
+</html>
