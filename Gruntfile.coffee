@@ -3,7 +3,22 @@
 module.exports = (grunt) ->
   
   grunt.initConfig
-  
+    #javascript files 
+    jsDir: "public/javascripts"
+    #javascript source files
+    jsSrcDir: "<%= jsDir %>/src"
+    #javascript libraries
+    libDir: "<%= jsDir %>/libs"
+
+    #handlebars files
+    hbDir: "public/handlebars"
+
+    #sass files
+    sassDir: "public/sass"
+
+    #output files
+    distDir: "public/dist"
+    
     minispade:
       options:
         renameRequire: true
