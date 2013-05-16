@@ -8,25 +8,29 @@ module.exports = (grunt) ->
     #javascript source files
     jsSrcDir: "<%= jsDir %>/src"
     #javascript libraries
-    libDir: "<%= jsDir %>/libs"
+    jsLibDir: "<%= jsDir %>/libs"
+    jsCompiled: "app.js"
 
     #handlebars files
     hbDir: "public/handlebars"
+    hbCompiled: "apptemplates.js"
 
     #sass files
     sassDir: "public/sass"
+    mainSassFile: "app.sass"
+    sassCompiled: "appsass.css"
 
     #output files
     distDir: "public/dist"
-    
+
     minispade:
       options:
         renameRequire: true
         useStrict: false
-        prefixToRemove: 'public/javascripts/'
+        prefixToRemove: '<%= jsSrcDir %>'+'/'
       files:
-        src: ['public/javascripts/**/*.js']
-        dest: 'public/dist/appjs.js'
+        src: ['<%= jsSrcDir %>/**/*.js']
+        dest: '<%= distDir %>/<%= jsCompiled %>'
 
     sass:
       dist:
@@ -34,41 +38,51 @@ module.exports = (grunt) ->
           trace: true
           style: 'expanded'
         files:
-          'public/dist/appsass.css': 'public/sass/app.sass'
+          '<%= distDir %>/<%= sassCompiled %>': '<%= sassDir %>/<%= mainSassFile %>'
 
     ember_templates:
       compile:
         options:
           templateName: (sourceFile) ->
-            return sourceFile.replace(/public\/handlebars\//,'')
+            #TODO: THIS IS HARDCODED...SHOULD CHANGE TO REF GLOBAL
+            return sourceFile.replace("public/handlebars/", "")
         files:
-          "public/dist/apptemplates.js": "public/handlebars/**/*.handlebars"
+          "<%= distDir%>/<%= hbCompiled %>": "<%= hbDir %>/**/*.handlebars"
     
+    jshint:
+      all: ['<%= jsSrcDir %>/**/*.js']
+
     watch:
       sass:
-        files: ['public/sass/**/*.sass']
+        files: ['<%= sassDir %>/**/*.sass']
         tasks: ['sass']
         options:
           livereload: true
+
       js:
-        files: ['public/javascripts/**/*.js']
-        tasks: ['minispade']
+        files: ['<%= jsSrcDir %>/**/*.js']
+        tasks: ['jshint', 'minispade']
         options:
           livereload: true
+
       handlebars:
-        files: ['public/handlebars/**/*.handlebars']
+        files: ['<%= hbDir%>/**/*.handlebars']
         tasks: ['ember_templates']
         options:
           livereload: true
+
+    
 
 
   grunt.loadNpmTasks('grunt-minispade')
   grunt.loadNpmTasks('grunt-contrib-sass')
   grunt.loadNpmTasks('grunt-ember-templates')
+  grunt.loadNpmTasks('grunt-contrib-jshint')
   grunt.loadNpmTasks('grunt-contrib-watch')
 
   grunt.registerTask('default', [
                                         'ember_templates',
                                         'sass',
                                         'minispade',
+                                        'jshint',
                                         'watch'])
