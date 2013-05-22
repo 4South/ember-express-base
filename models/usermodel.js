@@ -1,5 +1,5 @@
 var mongoose = require('mongoose')
-  , ModelClass = require('./model');
+  , ModelClass = require('./model').MongooseModel;
 
 /*
 Models are declared in the semantics of the ORM of choice
